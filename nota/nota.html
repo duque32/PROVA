@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form
+        class="totvs-form grid vertical create-form-components ui-sortable t0"
+        name="createFormComponents"
+        style="padding-left: 10px; padding-right: 10px;">
+        <h1 class="title-form-application"></h1>
+        <div class="form-field" data-type="textbox" data-show-properties=""
+            data-field-name="Nome"
+            style="position: relative; left: 0px; top: 0px;">
+
+
+            <div class="form-input">
+                <div class="form-group">
+                    <label>Nome</label> <input type="text" class="form-control"
+                        name="Nome" value="" placeholder="" data-size="big">
+                </div>
+            </div>
+        </div>
+        <div class="form-field" data-type="number" data-show-properties=""
+            data-field-name="Num01">
+            <div class="form-input">
+                <div class="form-group">
+                    <label>Nota1</label> <input type="number" class="form-control" onblur="Myfunction()"
+                        name="Num01" id="Num01" value="" placeholder="" data-size="big"
+                        data-only-numbers="">
+                </div>
+            </div>
+        </div>
+        <div class="form-field" data-type="number" data-show-properties=""
+            data-field-name="Num02">
+            <div class="form-input">
+                <div class="form-group">
+                    <label>Nota2</label> <input type="number" class="form-control" onblur="Myfunction()"
+                        name="Num02" id="Num02" value="" placeholder="" data-size="big"
+                        data-only-numbers="">
+                </div>
+            </div>
+        </div>
+        <div class="form-field" data-type="number" data-show-properties=""
+            data-field-name="Num03">
+            <div class="form-input">
+                <div class="form-group">
+                    <label>Num3</label> <input type="number" class="form-control" onblur="Myfunction()"
+                        name="Num03" id="Num03" value="" placeholder="" data-size="big"
+                        data-only-numbers="">
+                </div>
+            </div>
+        </div>
+        <div class="form-field" data-type="number" data-show-properties=""
+            data-field-name="Num04">
+            <div class="form-input">
+                <div class="form-group">
+                    <label>Num4</label> <input type="number" class="form-control" onblur="Myfunction()"
+                        name="Num04" id="Num04" value="" placeholder="" data-size="big"
+                        data-only-numbers="">
+                </div>
+            </div>
+        </div>
+        <div class="form-field" data-type="number" data-show-properties=""
+            data-field-name="Media">
+            <div class="form-input">
+                <div class="form-group">
+                    <label>Media</label> <input type="number" class="form-control"
+                        name="Media" id="Media" value="" placeholder="" data-size="big"
+                        data-only-numbers="">
+                </div>
+            </div>
+        </div>
+        
+    </form>
+
+
+    <script type="text/javascript">
+        var keyDown = false, ctrl = 17, vKey = 86, Vkey = 118;
+
+        $(document).keydown(function(e) {
+            if (e.keyCode == ctrl)
+                keyDown = true;
+        }).keyup(function(e) {
+            if (e.keyCode == ctrl)
+                keyDown = false;
+        });
+
+        $('[data-only-numbers]').on('keypress', function(e) {
+            if (!e) {
+                var e = window.event;
+            }
+
+            if (e.keyCode > 0 && e.which == 0) {
+                return true;
+            }
+
+            if (e.keyCode) {
+                code = e.keyCode;
+            } else if (e.which) {
+                code = e.which;
+            }
+
+            if (code == 46) {
+                return true;
+            }
+
+            var character = String.fromCharCode(code);
+            if (character == '\b' || character == ' ' || character == '\t') {
+                return true;
+            }
+            if (keyDown && (code == vKey || code == Vkey)) {
+                return (character);
+            } else {
+                return (/[0-9]$/.test(character));
+            }
+        }).on('focusout', function(e) {
+            var $this = $(this);
+            if ($this.val() == "") {
+                return true;
+            }
+            $this.val($this.val().replace(/[^0-9\.]/g, ''));
+        }).on('paste', function(e) {
+            var $this = $(this);
+            setTimeout(function() {
+                $this.val($this.val().replace(/[^0-9\.]/g, ''));
+            }, 5);
+        });
+
+        $('.create-form-components')
+                .on(
+                        'keyup',
+                        'input[required="required"][type="text"], input[required="required"][type="number"], input[required="required"][type="date"], textarea[required="required"]',
+                        function() {
+                            validationFieldsForm($(this), $(this).parents(
+                                    '.form-field').data('type'));
+                        });
+
+        $('.create-form-components')
+                .on(
+                        'change',
+                        'input[required="required"][type="checkbox"], input[required="required"][type="radio"], select[required="required"]',
+                        function() {
+                            validationFieldsForm($(this), $(this).parents(
+                                    '.form-field').data('type'));
+                        });
+
+        function validationFieldsForm(field, type) {
+            if (type === "checkbox" || type === "radio") {
+                if (!field.is(':checked')) {
+                    field.parents('.form-field').addClass('required');
+                } else {
+                    field.parents('.form-field').removeClass('required');
+                }
+            } else {
+                if (!field.val().trim()) {
+                    field.parents('.form-field').addClass('required');
+                } else {
+                    field.parents('.form-field').removeClass('required');
+                }
+            }
+        }
+
+        var $zoomPreview = $(".zoom-preview");
+        if ($zoomPreview.length) {
+            $zoomPreview.parent().removeClass("input-group");
+            $zoomPreview.remove();
+        }
+
+        var ratings = $(".rating");
+        if (ratings.length > 0)
+            ratingStars(ratings);
+        function ratingStars(stars) {
+            $.each(stars, function(i, obj) {
+                var field = $(this).closest(".form-group")
+                        .find(".rating-value");
+                var tgt = $(obj);
+                tgt.html("");
+                var rating = FLUIGC.stars(tgt, {
+                    value : field.val()
+                });
+                rating.on("click", function(o) {
+                    field.val($(this).index() + 1);
+                });
+            });
+        }
+
+        $.each($("[data-date]"), function(i, o) {
+            var id = $(o).attr("id");
+            FLUIGC.calendar("#" + id);
+        });
+
+        $(document).ready(function() {
+            $.each($("[data-date]"), function(i, o) {
+                var id = $(o).attr("id");
+                if ($("#" + id).attr("readonly")) {
+                    $("#" + id).data('DateTimePicker').disable();
+                }
+            });
+            $("#Num01, #Num02, #Num03, #num04").on("blur", Myfunction() {
+                $("#Media").val(calculaMedia());
+            });
+        });
+
+
+        function calculaMedia() {
+            var num1 = $("#Num01").val();
+            var num2 = $("#Num02").val();
+            var num3 = $("#Num03").val();
+            var num4 = $("#Num04").val();
+
+
+            if (num1 == '') {
+                num1 = 0;
+            }
+            if (num2 == '') {
+                num2 = 0;
+            }
+            if (num3 == '') {
+                num3 = 0;
+            }
+            if (num4 == '') {
+                num3 = 0;
+            }
+
+            var media = ((num1 + num2 + num3 + num4) / 4);
+
+            return media;
+        }
+
+    </script>
+</body>
+</html>
+</body>
+</html>

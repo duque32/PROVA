@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="index.js"></script>
+    <script src="model/jogador.js"></script>
+    <title>Nota</title>
+</head>
+<body>  
+    <div class="container-md">
+        <div class="row">
+            <div class="col align-self-start"></div>
+            <div class="col align-self-center">
+                <div class="card">
+                    <br><h4>Nota do aluno</h4>
+                    <form method="post" onsubmit="adiciona()">
+                        <br>
+                        <div class="md-4">
+                            <label for="nome">Digite seu nome</label><br>
+                            <input type="text" name="nome" id="nome" required><br>
+                        </div>
+                        <div class="md-4">
+                            <label>Nota1</label><br> 
+                            <input type="number" class="form-control" onblur="function()"
+                        name="Num01" id="Num01" value="" placeholder="" data-size="big"
+                        data-only-numbers="" required><br>
+                        </div>
+                        <div class="md-4">
+                            <label>Nota2</label><br> 
+                            <input type="number" class="form-control" onblur="function()"
+                        name="Num02" id="Num02" value="" placeholder="" data-size="big"
+                        data-only-numbers="" required><br>
+                        </div>
+                        <div class="md-4">
+                            <label>Nota3</label><br> 
+                            <input type="number" class="form-control" onblur="function()"
+                        name="Num03" id="Num03" value="" placeholder="" data-size="big"
+                        data-only-numbers="" required><br>
+                        </div>
+                        <div class="md-4">
+                            <label>Nota4</label><br> 
+                            <input type="number" class="form-control" onblur="function()"
+                        name="Num04" id="Num04" value="" placeholder="" data-size="big"
+                        data-only-numbers="" required><br>
+                        </div>
+                        <div class="md-4">
+                            <button type="submit" class="btn btn-secondary" ><a href='aprovado.html' class="link">Registrar resultado</a></button>
+                        </div><br>
+                    </form>
+                </div>
+            </div>
+            <div class="col align-self-end"></div>
+        </div>
+    </div>
+   
+    $("#Num01, #Num02, #Num03, #num04").on("blur", function() {
+        $("#Media").val(calculaMedia());
+    });
+});
+
+
+function calculaMedia() {
+    var num1 = $("#Num01").val();
+    var num2 = $("#Num02").val();
+    var num3 = $("#Num03").val();
+    var num4 = $("#Num04").val();
+
+
+    if (num1 == '') {
+        num1 = 0;
+    }
+    if (num2 == '') {
+        num2 = 0;
+    }
+    if (num3 == '') {
+        num3 = 0;
+    }
+    if (num4 == '') {
+        num3 = 0;
+    }
+
+    var media = ((num1 + num2 + num3 + num4) / 4);
+
+    return media;
+}
+    
+</body>
+</html>
